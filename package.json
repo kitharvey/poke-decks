@@ -1,4 +1,5 @@
 {
+  "homepage": "http://kitharvey.github.io/poke-decks",
   "name": "poke-decks",
   "version": "0.1.0",
   "private": true,
@@ -17,9 +18,13 @@
     "case": "^1.6.3",
     "framer": "^1.2.11",
     "framer-motion": "^2.9.5",
+<<<<<<< HEAD
     "next": "^10.0.7",
+=======
+    "gh-pages": "^3.1.0",
+>>>>>>> parent of 2b858d6... react-query setup properly
     "popmotion": "^9.0.2",
-    "postcss": "8.0.0",
+    "postcss": "7",
     "postcss-import": "^14.0.0",
     "prop-types": "^15.7.2",
     "react": "16.12.0",
@@ -34,9 +39,18 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
+<<<<<<< HEAD
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
+=======
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
+>>>>>>> parent of 2b858d6... react-query setup properly
   },
   "eslintConfig": {
     "extends": [

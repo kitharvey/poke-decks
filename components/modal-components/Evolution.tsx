@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { LazyImage } from 'react-lazy-images'
+<<<<<<< HEAD:components/modal-components/Evolution.tsx
 import { extractEvolutionChain, getIDStringfromURL, getImageSourceFromURL } from '../../functions/GlobalFunctions'
 import { GetPokemonDataInterface, GetPokemonSpeciesDataInterface, NameURLInterface } from '../../InterfacesProps/Interfaces'
 import useSWR from 'swr';
@@ -7,18 +8,34 @@ import { motion } from 'framer-motion'
 import { findColor } from '../../functions/getTypeIconAndColor'
 import { useRouter } from 'next/dist/client/router'
 import { fetchEvolutionData } from '../../fetch/FetchData'
+=======
+import { extractEvolutionChain, getIDStringfromURL, getImageSourceFromURL } from '../../Functions/GlobalFunctions'
+import { GetPokemonSpeciesDataInterface, NameURLInterface } from '../../InterfacesProps/Interfaces'
+import egg from "../../Assets/pokemon-egg.png"
+import { useQuery } from 'react-query'
+import { AppContext } from '../../Page/Page'
+import axios from 'axios'
+import { motion } from 'framer-motion'
+import { Link } from "react-router-dom";
+>>>>>>> parent of 2b858d6... react-query setup properly:src/Components/ModalComponents/Evolution.tsx
 
 interface EvolutionProps{
     pokemonSpeciesData: GetPokemonSpeciesDataInterface
-    pokemonData: GetPokemonDataInterface
 }
 
 
+<<<<<<< HEAD:components/modal-components/Evolution.tsx
 const Evolution: React.FC<EvolutionProps> = ({pokemonSpeciesData, pokemonData}) => {
     const { data } = useSWR(`${pokemonSpeciesData.evolution_chain.url}`, fetchEvolutionData)
     const [evolutionChain, setEvolutionChain] = useState<NameURLInterface[] | null>(null)
     const router = useRouter()
 
+=======
+const Evolution: React.FC<EvolutionProps> = ({pokemonSpeciesData}) => {
+    const {setStateActivePokemonID, stateActiveColorTheme} = useContext(AppContext)
+    const { data, isFetching } = useQuery('fetchEvolutionData', async() => await axios.get(`${pokemonSpeciesData.evolution_chain.url}`), {refetchOnWindowFocus: false})
+    const [evolutionChain, setEvolutionChain] = useState<NameURLInterface[] | null>(null)
+>>>>>>> parent of 2b858d6... react-query setup properly:src/Components/ModalComponents/Evolution.tsx
     useEffect(() => {
         if(data) {
             const evolutionData = extractEvolutionChain(data)
@@ -28,18 +45,27 @@ const Evolution: React.FC<EvolutionProps> = ({pokemonSpeciesData, pokemonData}) 
 
         return (() => {
             setEvolutionChain(null)
+
             }
         )
     },[data])
 
+    const handleClick = (id: string) => {
+        setStateActivePokemonID(id)
+    }
 
     return (
         <div className="flex flex-wrap justify-evenly w-full mt-4" >
         {(evolutionChain) ? evolutionChain.map( ({name, url}, index) => <div key={index} className="flex flex-col items-center" >
             <p className="text-xs" >#{getIDStringfromURL(url)}</p>
+<<<<<<< HEAD:components/modal-components/Evolution.tsx
+=======
+            <Link to={`/${getIDStringfromURL(url)}`} >
+>>>>>>> parent of 2b858d6... react-query setup properly:src/Components/ModalComponents/Evolution.tsx
             <motion.div className="w-28 h-28 rounded-full p-4 m-2 cursor-pointer"
+                onClick={() => handleClick(getIDStringfromURL(url))}
                 style={{
-                    background: `linear-gradient(0deg, ${findColor(pokemonData.types[0].type.name)[1] + "10"} 0%, ${findColor(pokemonData.types[0].type.name)[1]} 80%)`
+                    background: `linear-gradient(0deg, ${stateActiveColorTheme + "10"} 0%, ${stateActiveColorTheme} 80%)`
                 }}
                 initial={{
                     scale: 0,
